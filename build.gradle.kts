@@ -11,6 +11,7 @@ val group:              String by project
 
 plugins {
     id("java")
+    id("maven-publish")
 }
 
 version = "$coreVersion-$buildStatus.$buildNumber"
@@ -31,4 +32,12 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
 }
