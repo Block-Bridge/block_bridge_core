@@ -1,7 +1,8 @@
 package me.quickscythe.blockbridge.core.event.listener;
 
-import me.quickscythe.api.event.api.ApiChannelMessageEvent;
-import me.quickscythe.api.event.minecraft.*;
+
+import me.quickscythe.blockbridge.core.event.api.ApiChannelMessageEvent;
+import me.quickscythe.blockbridge.core.event.minecraft.*;
 
 public interface Listener {
 
@@ -21,6 +22,14 @@ public interface Listener {
     }
     interface PingListener extends Listener {
         void onPing(ServerPingEvent event);
+    }
+
+    interface DeathListener extends Listener {
+        void onDeath(PlayerDeathEvent event);
+    }
+
+    interface CommandListener extends Listener {
+        void onCommand(PlayerCommandEvent event);
     }
 
     interface ApiChannelListener extends Listener {

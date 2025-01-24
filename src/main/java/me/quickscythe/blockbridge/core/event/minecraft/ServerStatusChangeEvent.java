@@ -1,24 +1,13 @@
 package me.quickscythe.blockbridge.core.event.minecraft;
 
-import me.quickscythe.api.event.Event;
+import me.quickscythe.blockbridge.core.event.BridgeEvent;
+import me.quickscythe.blockbridge.core.event.listener.Listener;
 import me.quickscythe.blockbridge.core.minecraft.MinecraftServer;
 
-public class ServerStatusChangeEvent extends Event {
+public record ServerStatusChangeEvent(String status, MinecraftServer server) implements BridgeEvent {
 
-    private String status;
-    private MinecraftServer server;
-
-    public ServerStatusChangeEvent(String status, MinecraftServer server) {
-        this.status = status;
-        this.server = server;
+    @Override
+    public Class<? extends Listener> listener() {
+        return Listener.StatusListener.class;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public MinecraftServer getServer() {
-        return server;
-    }
-
 }

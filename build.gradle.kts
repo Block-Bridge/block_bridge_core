@@ -23,7 +23,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 
-    testImplementation("commons-io:commons-io:${apacheVersion}")
+//    testImplementation("commons-io:commons-io:${apacheVersion}")
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.json:json:$jsonVersion")

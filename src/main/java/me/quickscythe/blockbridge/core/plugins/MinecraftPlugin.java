@@ -1,4 +1,7 @@
 package me.quickscythe.blockbridge.core.plugins;
 
-public class MinecraftPlugin implements Plugin {
+public abstract class MinecraftPlugin extends Plugin {
+    public MinecraftPlugin(String name) {
+        super(name);
+    }
 }

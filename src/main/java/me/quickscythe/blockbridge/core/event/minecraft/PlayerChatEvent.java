@@ -1,24 +1,14 @@
 package me.quickscythe.blockbridge.core.event.minecraft;
 
-import me.quickscythe.api.event.Event;
-import me.quickscythe.api.object.Player;
+import me.quickscythe.blockbridge.core.event.BridgeEvent;
+import me.quickscythe.blockbridge.core.event.listener.Listener;
+import me.quickscythe.blockbridge.core.minecraft.Player;
 
-public class PlayerChatEvent extends Event {
-    private Player player;
-    private String message;
+public record PlayerChatEvent(Player player, String message) implements BridgeEvent {
 
-    public PlayerChatEvent(Player player, String message) {
-        this.player = player;
-        this.message = message;
+
+    @Override
+    public Class<? extends Listener> listener() {
+        return Listener.ChatListener.class;
     }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-
 }

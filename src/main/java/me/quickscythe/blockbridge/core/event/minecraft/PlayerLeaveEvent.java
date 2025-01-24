@@ -1,16 +1,14 @@
 package me.quickscythe.blockbridge.core.event.minecraft;
 
-import me.quickscythe.api.event.Event;
-import me.quickscythe.api.object.Player;
 
-public class PlayerLeaveEvent extends Event {
-    private Player player;
+import me.quickscythe.blockbridge.core.event.BridgeEvent;
+import me.quickscythe.blockbridge.core.event.listener.Listener;
+import me.quickscythe.blockbridge.core.minecraft.Player;
 
-    public PlayerLeaveEvent(Player player) {
-        this.player = player;
-    }
+public record PlayerLeaveEvent(Player player) implements BridgeEvent {
 
-    public Player getPlayer() {
-        return player;
+    @Override
+    public Class<? extends Listener> listener() {
+        return Listener.LeaveListener.class;
     }
 }

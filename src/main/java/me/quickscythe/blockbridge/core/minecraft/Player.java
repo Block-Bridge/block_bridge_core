@@ -2,21 +2,15 @@ package me.quickscythe.blockbridge.core.minecraft;
 
 import org.json.JSONObject;
 
-public class Player {
-    private String name;
-    private String uid;
+import java.util.UUID;
+
+public class Player extends MinecraftEntity {
 
     public Player(JSONObject data) {
-        this.name = data.getString("username");
-        this.uid = data.getString("uuid");
+        super(data);
     }
 
-    public String getName(){
-        return name;
+    public Player(String name, UUID uid) {
+        super(name, uid);
     }
-
-    public String getUid(){
-        return uid;
-    }
-
 }
