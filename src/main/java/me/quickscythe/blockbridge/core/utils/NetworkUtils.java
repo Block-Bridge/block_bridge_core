@@ -10,6 +10,8 @@ package me.quickscythe.blockbridge.core.utils;
 
 
 
+import org.json.JSONObject;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,6 +64,57 @@ public class NetworkUtils {
             Logger.getLogger("Core").info("An error occurred while downloading file");
         }
         return InputStream.nullInputStream();
+    }
+
+    public String request(String url, String... auth) {
+        try {
+            URL myUrl = new URI(url).toURL();
+            HttpURLConnection conn = (HttpURLConnection) myUrl.openConnection();
+            conn.setDoOutput(true);
+            conn.setReadTimeout(30000);
+            conn.setConnectTimeout(30000);
+            conn.setUseCaches(false);
+            conn.setAllowUserInteraction(false);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept-Charset", "UTF-8");
+            conn.setRequestMethod("GET");
+
+            if (auth != null && auth.length >= 2) {
+                String userCredentials = auth[0].trim() + ":" + auth[1].trim();
+                String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+                conn.setRequestProperty("Authorization", basicAuth);
+            }
+            return conn.getResponseMessage();
+        } catch (Exception ex) {
+            Logger.getLogger("Network").info("An error occurred while downloading file");
+        }
+        return null;
+    }
+
+    public String post(String url, JSONObject data, String... auth) {
+        try {
+            URL myUrl = new URI(url).toURL();
+            HttpURLConnection conn = (HttpURLConnection) myUrl.openConnection();
+            conn.setDoOutput(true);
+            conn.setReadTimeout(30000);
+            conn.setConnectTimeout(30000);
+            conn.setUseCaches(false);
+            conn.setAllowUserInteraction(false);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept-Charset", "UTF-8");
+            conn.setRequestMethod("POST");
+
+            if (auth != null && auth.length >= 2) {
+                String userCredentials = auth[0].trim() + ":" + auth[1].trim();
+                String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
+                conn.setRequestProperty("Authorization", basicAuth);
+            }
+            conn.getOutputStream().write(data.toString().getBytes());
+            return conn.getResponseMessage();
+        } catch (Exception ex) {
+            Logger.getLogger("Network").info("An error occurred while downloading file");
+        }
+        return null;
     }
 
     /**
