@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Optional;
 
 public class ObjectFactory {
 
@@ -17,7 +18,7 @@ public class ObjectFactory {
     }
 
     public static BridgeIntegration createIntegration(String name, String folderPath){
-        return new BridgeIntegration() {
+        return new BridgeIntegration(Optional.empty()) {
 
             final Logger logger = LoggerFactory.getLogger(this.getClass());
             File file = new File(folderPath);
@@ -46,6 +47,11 @@ public class ObjectFactory {
             @Override
             public String name() {
                 return name;
+            }
+
+            @Override
+            public String version() {
+                return "1.0.1";
             }
         };
     }
