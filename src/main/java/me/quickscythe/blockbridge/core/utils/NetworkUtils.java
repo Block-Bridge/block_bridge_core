@@ -66,7 +66,7 @@ public class NetworkUtils {
         return InputStream.nullInputStream();
     }
 
-    public String request(String url, String... auth) {
+    public static  String request(String url, String... auth) {
         try {
             URL myUrl = new URI(url).toURL();
             HttpURLConnection conn = (HttpURLConnection) myUrl.openConnection();
@@ -91,7 +91,7 @@ public class NetworkUtils {
         return null;
     }
 
-    public String post(String url, JSONObject data, String... auth) {
+    public static  String post(String url, JSONObject data, String... auth) {
         try {
             URL myUrl = new URI(url).toURL();
             HttpURLConnection conn = (HttpURLConnection) myUrl.openConnection();
