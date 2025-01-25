@@ -63,7 +63,7 @@ public class NetworkUtils {
         return InputStream.nullInputStream();
     }
 
-    private static String inputStreamToString(InputStream inputStream) {
+    public static String streamToString(InputStream inputStream) {
         try {
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -81,7 +81,7 @@ public class NetworkUtils {
     }
 
     public static String request(String url, String... auth) {
-        return inputStreamToString(downloadFile(url, auth));
+        return streamToString(downloadFile(url, auth));
     }
 
     public static String post(String url, JSONObject data, String... auth) {
@@ -103,7 +103,7 @@ public class NetworkUtils {
                 conn.setRequestProperty("Authorization", basicAuth);
             }
             conn.getOutputStream().write(data.toString().getBytes());
-            return inputStreamToString(conn.getInputStream());
+            return streamToString(conn.getInputStream());
         } catch (Exception ex) {
             Logger.getLogger("Network").info("An error occurred while downloading file");
         }
