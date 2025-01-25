@@ -2,6 +2,7 @@ package me.quickscythe.blockbridge.core;
 
 import me.quickscythe.blockbridge.core.event.EventHandler;
 import me.quickscythe.blockbridge.core.plugins.PluginLoader;
+import me.quickscythe.blockbridge.core.server.BridgeServer;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -12,16 +13,22 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Comparator;
+import java.util.Optional;
 
 public abstract class BridgeIntegration {
+
+    private final BridgeServer server;
+
 
     private final EventHandler handler;
     private final PluginLoader loader;
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
 
-    public BridgeIntegration(){
+    public BridgeIntegration(Optional<BridgeServer.ServerConfig> serverConfig) {
         handler = new EventHandler(this);
         loader = new PluginLoader(this);
+
+        this.server = serverConfig.map(config -> new BridgeServer(this, config)).orElse(null);
     }
 
     public final EventHandler events(){
@@ -34,6 +41,10 @@ public abstract class BridgeIntegration {
 
     public final Logger logger(){
         return logger;
+    }
+
+    public BridgeServer server(){
+        return server;
     }
 
     public void destroy() throws IOException {
@@ -71,6 +82,8 @@ public abstract class BridgeIntegration {
      * @return The name of the plugin
      */
     public abstract String name();
+
+    public abstract String version();
 
 
 }
