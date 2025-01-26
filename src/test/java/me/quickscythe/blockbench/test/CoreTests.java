@@ -7,6 +7,7 @@ import me.quickscythe.blockbridge.core.config.Config;
 import me.quickscythe.blockbridge.core.config.ConfigManager;
 import me.quickscythe.blockbridge.core.plugins.Plugin;
 import me.quickscythe.blockbridge.core.utils.NetworkUtils;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,17 @@ public class CoreTests {
 //        BridgeIntegration integration = ObjectFactory.createIntegration();
 //        launchIntegration(integration, "launchIntegration");
 //    }
+
+    @Test
+    void testNetworkUtilsClass(){
+        String request = NetworkUtils.request("http://www.google.com");
+
+        assertNotNull(request, "Request was null");
+
+        String post = NetworkUtils.post("http://www.google.com", new JSONObject().put("test", "test"));
+        System.out.println(post);
+
+    }
 
     @Test
     void launchIntegrationWithPluginsClearWhenDone() throws InterruptedException, IOException {
