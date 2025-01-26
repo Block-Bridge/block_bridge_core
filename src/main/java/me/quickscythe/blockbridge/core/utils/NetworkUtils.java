@@ -104,8 +104,6 @@ public class NetworkUtils {
             }
             conn.getOutputStream().write(data.toString().getBytes());
             String response = streamToString(conn.getInputStream());
-            conn.getOutputStream().close();
-            conn.disconnect();
             return response;
         } catch (Exception ex) {
             Logger.getLogger("Network").info("An error occurred while downloading file");
