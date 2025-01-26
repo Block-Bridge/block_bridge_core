@@ -37,11 +37,16 @@ public class CoreTests {
 
     @Test
     void testNetworkUtilsClass(){
-        String request = NetworkUtils.request("http://www.google.com");
+        String url = "http://127.0.0.1:9009/v1/token";
+        String request = NetworkUtils.request(url);
+
+        System.out.println(request);
 
         assertNotNull(request, "Request was null");
 
-        String post = NetworkUtils.post("http://www.google.com", new JSONObject().put("test", "test"));
+        String post = NetworkUtils.post(url, new JSONObject().put("token", "test"));
+
+        assertNotNull(post, "Post was null");
         System.out.println(post);
 
     }

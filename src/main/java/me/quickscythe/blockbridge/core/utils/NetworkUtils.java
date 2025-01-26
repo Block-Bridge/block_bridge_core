@@ -76,6 +76,7 @@ public class NetworkUtils {
             return stringBuilder.toString();
         } catch (Exception ex) {
             Logger.getLogger("Network").info("An error occurred while downloading file");
+            ex.printStackTrace();
         }
         return null;
     }
