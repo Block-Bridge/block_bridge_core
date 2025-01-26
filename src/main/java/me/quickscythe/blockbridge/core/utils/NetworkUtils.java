@@ -103,7 +103,10 @@ public class NetworkUtils {
                 conn.setRequestProperty("Authorization", basicAuth);
             }
             conn.getOutputStream().write(data.toString().getBytes());
-            return streamToString(conn.getInputStream());
+            String response = streamToString(conn.getInputStream());
+            conn.getOutputStream().close();
+            conn.disconnect();
+            return response;
         } catch (Exception ex) {
             Logger.getLogger("Network").info("An error occurred while downloading file");
         }
