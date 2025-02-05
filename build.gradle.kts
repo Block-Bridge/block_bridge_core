@@ -28,6 +28,8 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.json:json:$jsonVersion")
+    implementation("org.eclipse.jetty:jetty-server:11.0.0")
+    implementation("org.eclipse.jetty:jetty-servlet:11.0.0")
 }
 
 tasks.test {

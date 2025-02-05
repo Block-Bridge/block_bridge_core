@@ -6,6 +6,7 @@ import me.quickscythe.blockbridge.core.BridgeIntegration;
 import me.quickscythe.blockbridge.core.config.Config;
 import me.quickscythe.blockbridge.core.config.ConfigManager;
 import me.quickscythe.blockbridge.core.plugins.Plugin;
+import me.quickscythe.blockbridge.core.server.BridgeServer;
 import me.quickscythe.blockbridge.core.utils.NetworkUtils;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -36,9 +37,16 @@ public class CoreTests {
 //    }
 
     @Test
+    void testJetty(){
+        BridgeServer.ServerConfig config = new BridgeServer.ServerConfig(BridgeServer.ServerProtocol.HTTP, "127.0.0.1", 9009);
+        BridgeIntegration integration = ObjectFactory.createIntegrationWithServer(config, "TestIntegration", "test_data");
+
+    }
+
+    @Test
     void testNetworkUtilsClass(){
-        String url = "http://127.0.0.1:9009/v1/token";
-        String request = NetworkUtils.request(url);
+        String url = "http://127.0.0.1:9009/v1/token/";
+        String request = NetworkUtils.post(url, new JSONObject());
 
         System.out.println(request);
 
