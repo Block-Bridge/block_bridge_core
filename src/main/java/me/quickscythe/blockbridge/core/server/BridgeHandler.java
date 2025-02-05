@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,6 +27,11 @@ public class BridgeHandler extends ServletContextHandler {
 
     public BridgeServer server() {
         return server;
+    }
+
+    public void handle(String name, BridgeServlet servlet, String path){
+        addServlet(new ServletHolder(name, servlet), server.integration().version() + "/" + path);
+        server.integration().logger().info("Added servlet {} at: {}/{}", name, server.integration().version(), path);
     }
 
 
