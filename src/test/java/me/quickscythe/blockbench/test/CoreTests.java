@@ -6,9 +6,6 @@ import me.quickscythe.blockbridge.core.BridgeIntegration;
 import me.quickscythe.blockbridge.core.config.Config;
 import me.quickscythe.blockbridge.core.config.ConfigManager;
 import me.quickscythe.blockbridge.core.plugins.Plugin;
-import me.quickscythe.blockbridge.core.server.BridgeServer;
-import me.quickscythe.blockbridge.core.utils.NetworkUtils;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -28,36 +24,6 @@ public class CoreTests {
 
     Logger logger = LoggerFactory.getLogger(CoreTests.class);
 
-
-//    @Test
-//    void launchIntegration(){
-//        logger.info("Starting test: launchIntegration");
-//        BridgeIntegration integration = ObjectFactory.createIntegration();
-//        launchIntegration(integration, "launchIntegration");
-//    }
-
-    @Test
-    void testJetty(){
-        BridgeServer.ServerConfig config = new BridgeServer.ServerConfig(BridgeServer.ServerProtocol.HTTP, "127.0.0.1", 9009);
-        BridgeIntegration integration = ObjectFactory.createIntegrationWithServer(config, "TestIntegration", "test_data");
-
-    }
-
-    @Test
-    void testNetworkUtilsClass(){
-        String url = "http://127.0.0.1:9009/v1/token/";
-        String request = NetworkUtils.post(url, new JSONObject());
-
-        System.out.println(request);
-
-        assertNotNull(request, "Request was null");
-
-        String post = NetworkUtils.post(url, new JSONObject().put("token", "test"));
-
-        assertNotNull(post, "Post was null");
-        System.out.println(post);
-
-    }
 
     @Test
     void launchIntegrationWithPluginsClearWhenDone() throws InterruptedException, IOException {
@@ -94,7 +60,6 @@ public class CoreTests {
             }
 
 
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -102,7 +67,7 @@ public class CoreTests {
         integration.loader().enable();
         assertFalse(integration.loader().getPlugins().isEmpty(), "No plugins were loaded");
         List<Plugin> plugins = new ArrayList<>(integration.loader().getPlugins());
-        for(Plugin plugin : plugins){
+        for (Plugin plugin : plugins) {
             integration.loader().disablePlugin(plugin);
         }
         plugins.clear();
@@ -115,7 +80,6 @@ public class CoreTests {
         integration.log("TestIntegration", "Tests Complete! Time took: " + (System.currentTimeMillis() - started) + "ms");
 
         assertFalse(integration.dataFolder().exists());
-
 
 
     }
@@ -183,7 +147,7 @@ public class CoreTests {
         assertTrue(config.file().exists(), "Config file does not exist");
     }
 
-    void launchIntegration(BridgeIntegration integration, String test){
+    void launchIntegration(BridgeIntegration integration, String test) {
         integration.enable();
         TestConfig config = ConfigManager.getConfig(integration, TestConfig.class);
         logger.info("{}: Verifying config files exist", test);
