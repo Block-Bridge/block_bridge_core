@@ -10,10 +10,16 @@ import java.net.InetSocketAddress;
 public class BridgeServer extends Server{
 
     private final BridgeIntegration integration;
+    private final BridgeHandler handler;
 
     public BridgeServer(BridgeIntegration integration, ServerConfig config) {
         super(config.port());
         this.integration = integration;
+        this.handler = new BridgeHandler(this);
+    }
+
+    public BridgeHandler handler(){
+        return handler;
     }
 
     public BridgeIntegration integration(){

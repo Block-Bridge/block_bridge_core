@@ -12,7 +12,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import java.io.IOException;
 import java.net.URI;
 
-public abstract class BridgeHandler extends ServletContextHandler {
+public class BridgeHandler extends ServletContextHandler {
 
     BridgeServer server;
 

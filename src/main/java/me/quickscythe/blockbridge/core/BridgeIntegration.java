@@ -35,7 +35,46 @@ public abstract class BridgeIntegration {
         this.server = serverConfig.map(config -> new BridgeServer(this, config)).orElse(null);
     }
 
+    public static void main(String[] args) {
+        BridgeServer.ServerConfig config = new BridgeServer.ServerConfig(BridgeServer.ServerProtocol.HTTP, "127.0.0.1", 9009);
+        BridgeIntegration integration = new BridgeIntegration(Optional.of(config)) {
+            @Override
+            public void enable() {
+                log(name(), "Enabled");
+                BridgeHandler handler = new BridgeHandler(server()) {
+                    @Override
+                    public void doHandle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+                        super.doHandle(target, baseRequest, request, response);
+                        System.out.println("HANDLE?!");
+                    }
+                };
+                handler.setContextPath("/test/");
+                handler.setResourceBase("run/data/web");
+                handler.addServlet(DefaultServlet.class, "/");
+                try {
+                    server().start();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
+            @Override
+            public File dataFolder() {
+                return new File("data");
+            }
+
+            @Override
+            public String name() {
+                return "Test";
+            }
+
+            @Override
+            public String version() {
+                return "1.0";
+            }
+        };
+        integration.enable();
+    }
 
     public final EventHandler events() {
         return handler;
