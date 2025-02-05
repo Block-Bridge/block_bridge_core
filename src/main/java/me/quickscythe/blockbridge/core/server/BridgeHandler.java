@@ -31,8 +31,9 @@ public class BridgeHandler extends ServletContextHandler {
 
     public void handle(String name, BridgeServlet servlet, String path){
         path = path.startsWith("/") ? path.substring(1) : path;
+        String url = server.integration().server().config().address();
         addServlet(new ServletHolder(name, servlet), "/" + server.integration().version() + "/" + path);
-        server.integration().logger().info("Added servlet {} at: {}/{}", name, server.integration().version(), path);
+        server.integration().logger().info("Added servlet {} at: {}/{}/{}", name, url, server.integration().version(), path);
     }
 
 

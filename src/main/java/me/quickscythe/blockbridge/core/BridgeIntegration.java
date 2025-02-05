@@ -7,6 +7,7 @@ import me.quickscythe.blockbridge.core.event.EventHandler;
 import me.quickscythe.blockbridge.core.plugins.PluginLoader;
 import me.quickscythe.blockbridge.core.server.BridgeHandler;
 import me.quickscythe.blockbridge.core.server.BridgeServer;
+import me.quickscythe.blockbridge.core.server.BridgeServlet;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.slf4j.Logger;
@@ -48,9 +49,13 @@ public abstract class BridgeIntegration {
                         System.out.println("HANDLE?!");
                     }
                 };
-                handler.setContextPath("/test/");
-                handler.setResourceBase("run/data/web");
-                handler.addServlet(DefaultServlet.class, "/");
+                handler.handle("test", new BridgeServlet(server()) {
+                    @Override
+                    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+                        super.doGet(req, resp);
+                        System.out.println("GET?!");
+                    }
+                }, "test");
                 try {
                     server().start();
                 } catch (Exception e) {

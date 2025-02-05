@@ -7,15 +7,17 @@ import org.eclipse.jetty.server.Server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-public class BridgeServer extends Server{
+public class BridgeServer extends Server {
 
     private final BridgeIntegration integration;
     private final BridgeHandler handler;
+    private final ServerConfig config;
 
     public BridgeServer(BridgeIntegration integration, ServerConfig config) {
         super(config.port());
         this.integration = integration;
         this.handler = new BridgeHandler(this);
+        this.config = config;
     }
 
     public BridgeHandler handler(){
@@ -30,7 +32,11 @@ public class BridgeServer extends Server{
     public void handle(BridgeHandler handler) {
         setHandler(handler);
     }
-    
+
+    public ServerConfig config() {
+        return config;
+    }
+
     public record ServerConfig(ServerProtocol protocol, String host, int port) {
 
         public String address(){
