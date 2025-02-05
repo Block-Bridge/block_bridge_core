@@ -31,6 +31,17 @@ dependencies {
     implementation("org.eclipse.jetty:jetty-server:11.0.0")
     implementation("org.eclipse.jetty:jetty-servlet:11.0.0")
 }
+val targetJavaVersion = 21
+java {
+    withSourcesJar()
+    withJavadocJar()
+    val javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
+    }
+}
 
 tasks.test {
     useJUnitPlatform()
